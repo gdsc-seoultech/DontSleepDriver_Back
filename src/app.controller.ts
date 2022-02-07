@@ -6,6 +6,6 @@ export class AppController {
 
   @Get()
   async test() {
-    return 'hello';
+    return 'hello Test';
   }
 }

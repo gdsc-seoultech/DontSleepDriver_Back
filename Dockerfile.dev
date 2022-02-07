@@ -1,0 +1,22 @@
+FROM node:16
+
+WORKDIR /usr/src/app
+
+# 패키지와 prisma 파일 카피
+COPY package*.json ./
+COPY prisma ./prisma/
+
+# install 패키지
+RUN npm install
+RUN npm install -g prisma
+# prisma generate로 client 최신화
+RUN npm run prisma:generate:dev 
+
+# 소스코드 복사
+COPY . .
+
+# database base가 실행 후에 실행할 친구들
+RUN chmod +x entrypoint-dev.sh
+ENTRYPOINT ["sh","/usr/src/app/entrypoint-dev.sh"]
+
+EXPOSE 3000
