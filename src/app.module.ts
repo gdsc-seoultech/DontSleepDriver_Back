@@ -4,16 +4,19 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { PrismaModule } from './prisma/prisma.module';
 import { EmailModule } from './email/email.module';
 import { ConfigModule } from '@nestjs/config';
+import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import emailConfig from './config/email.config';
+import redisConfig from './config/redis.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [emailConfig],
+      load: [emailConfig, redisConfig],
       isGlobal: true,
     }),
     PrismaModule,
     EmailModule,
+    RedisCacheModule,
   ],
   controllers: [AppController],
 })

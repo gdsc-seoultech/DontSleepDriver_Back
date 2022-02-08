@@ -17,6 +17,12 @@ services:
       - TZ=Asia/Seoul
     cap_add:
       - SYS_NICE
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - 16379:6379
+    restart: on-failure
   main-api-dev:
     build:
       context: .
@@ -28,6 +34,7 @@ services:
       - 3000:3000
     depends_on:
       - mysql-dev
+      - redis
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
