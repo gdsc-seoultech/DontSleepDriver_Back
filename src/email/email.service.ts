@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { RedisCacheService } from './../redis-cache/redis-cache.service';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import Mail from 'nodemailer/lib/mailer';
 import * as nodemailer from 'nodemailer';
 import * as uuid from 'uuid';
 import emailConfig from 'src/config/email.config';
 import { ConfigType } from '@nestjs/config';
+import { UserRepository } from 'src/repositories/user.repository';
 
 interface EmailOptions {
   to: string;
@@ -16,6 +18,8 @@ export class EmailService {
   private transporter: Mail;
   constructor(
     @Inject(emailConfig.KEY) private config: ConfigType<typeof emailConfig>,
+    private userRepository: UserRepository,
+    private redisCacheService: RedisCacheService,
   ) {
     this.transporter = nodemailer.createTransport({
       service: this.config.service,
@@ -29,6 +33,9 @@ export class EmailService {
   }
 
   async sendJoinEmail(email: string) {
+    const existedEmail = await this.userRepository.findByUnique({ email });
+    if (existedEmail) throw new HttpException('exist Email', 409);
+
     const signUpToken = uuid.v1();
     const mailOption: EmailOptions = {
       to: email,
@@ -38,8 +45,27 @@ export class EmailService {
         <p>${signUpToken}</p>
       `,
     };
-    await this.transporter.sendMail(mailOption);
 
-    return '메일 전송 성공';
+    //캐시가 이미 있는지 확인.
+    const existedCache = await this.redisCacheService.getCache(email);
+    if (existedCache === 'checked') return '이미 인증된 회원입니다.';
+    try {
+      await this.transporter.sendMail(mailOption);
+      await this.redisCacheService.setCache(email, signUpToken, { ttl: 180 });
+      return '이메일 전송 성공';
+    } catch (err) {
+      console.error(err);
+      return '이메일 전송 실패 or setCache 실패';
+    }
+  }
+
+  async checkTokenByEmail(email: string, token: string) {
+    const existedToken = await this.redisCacheService.getCache(email);
+    if (existedToken === token) {
+      await this.redisCacheService.setCache(email, 'checked', { ttl: 600 });
+      return '인증 성공';
+    } else {
+      throw new HttpException('check failed', 401);
+    }
   }
 }
