@@ -1,3 +1,4 @@
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { PrismaClientExceptionFilter } from './common/exception/prisma-client-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
@@ -10,6 +11,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(express.json({ limit: '50mb' }));
+
+  app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));

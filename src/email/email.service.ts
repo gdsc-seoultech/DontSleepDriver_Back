@@ -55,7 +55,7 @@ export class EmailService {
       return '이메일 전송 성공';
     } catch (err) {
       console.error(err);
-      return '이메일 전송 실패 or setCache 실패';
+      throw new HttpException('send Email Failed', 500);
     }
   }
 

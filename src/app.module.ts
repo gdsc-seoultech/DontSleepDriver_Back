@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import emailConfig from './config/email.config';
 import redisConfig from './config/redis.config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import redisConfig from './config/redis.config';
     PrismaModule,
     EmailModule,
     RedisCacheModule,
+    UserModule,
   ],
   controllers: [AppController],
 })

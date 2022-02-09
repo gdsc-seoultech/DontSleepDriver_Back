@@ -9,4 +9,8 @@ export class UserRepository {
   async findByUnique(input: Prisma.UserWhereUniqueInput) {
     return await this.prisma.user.findUnique({ where: input });
   }
+
+  async create(data: Prisma.UserCreateInput) {
+    return await this.prisma.user.create({ data });
+  }
 }
