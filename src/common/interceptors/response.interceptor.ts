@@ -13,7 +13,6 @@ export class ResponseInterceptor implements NestInterceptor {
     //before는 거의 미들웨어가 처리해줌.
     return next.handle().pipe(
       map((response: unknown) => {
-        console.log(response);
         if (typeof response === 'string') {
           return {
             message: response,

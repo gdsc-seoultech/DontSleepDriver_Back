@@ -8,17 +8,20 @@ import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import emailConfig from './config/email.config';
 import redisConfig from './config/redis.config';
 import { UserModule } from './user/user.module';
+import jwtConfig from './config/jwt.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [emailConfig, redisConfig],
+      load: [emailConfig, redisConfig, jwtConfig],
       isGlobal: true,
     }),
     PrismaModule,
     EmailModule,
     RedisCacheModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
 })
