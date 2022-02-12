@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql-dev:
+    image: mysql:8
+    container_name: mysql-dev
+    ports:
+      - 13306:3306
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .development.env
+    environment:
+      - TZ=Asia/Seoul
+    cap_add:
+      - SYS_NICE
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - 16379:6379
+    restart: on-failure
+  main-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: main-api-dev
+    restart: always
+    command: ./entrypoint-dev.sh
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql-dev
+      - redis
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
