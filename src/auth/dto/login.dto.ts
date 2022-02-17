@@ -16,3 +16,8 @@ export class LoginRequest {
   @Matches(/^[A-Za-z\d!@#$%^&*()]{8,30}$/)
   password: string;
 }
+
+export class LoginResponse {
+  @IsString()
+  token: string;
+}
