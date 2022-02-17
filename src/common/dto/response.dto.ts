@@ -1,12 +1,12 @@
 import { Exclude } from 'class-transformer';
 
 export class ResponseDto<T> {
-  @Exclude() private status: boolean;
+  @Exclude() private success: boolean;
   @Exclude() private message: string;
   @Exclude() private data: T;
 
   constructor(message: string, data: T) {
-    this.status = true;
+    this.success = true;
     this.message = message;
     this.data = data;
   }
