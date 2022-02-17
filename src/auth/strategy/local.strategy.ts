@@ -14,7 +14,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string) {
-    console.log(email, password);
     const user = await this.authService.validateUser({ email, password });
     if (!user) {
       throw new HttpException('이메일과 패스워드를 확인해주세요', 400);
