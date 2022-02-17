@@ -26,7 +26,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         case 'TokenExpiredError':
           throw new HttpException('기간 만료', HttpStatus.UNAUTHORIZED);
         case 'JsonWebTokenError':
-          throw new HttpException('token 값 에러', HttpStatus.UNAUTHORIZED);
+          throw new HttpException('token 값 에러', HttpStatus.BAD_REQUEST);
       }
     }
     if (err || !user) {
