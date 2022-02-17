@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  redis-prod:
+    image: 'redis:alpine'
+    container_name: redis-prod
+    ports:
+      - 16379:6379
+    restart: on-failure
+  main-api-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: main-api-prod
+    restart: always
+    command: sh entrypoint-prod.sh
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis-prod
