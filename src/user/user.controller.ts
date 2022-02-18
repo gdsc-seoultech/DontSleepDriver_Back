@@ -1,3 +1,4 @@
+import { ResponseDto } from './../common/dto/response.dto';
 import { JwtAuthGuard } from './../auth/guard/jwt.guard';
 import { UserService } from './user.service';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
@@ -10,16 +11,19 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  async signUp(@Body() data: CreateUserRequest) {
-    return this.userService.signUp(data);
+  async signUp(@Body() data: CreateUserRequest): Promise<ResponseDto<[]>> {
+    await this.userService.signUp(data);
+    return ResponseDto.OK('회원가입 성공');
   }
 
   //유저 정보 확인용, 기획은 없음
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getUserInfo(@User() user: JwtPayloadDto) {
+  async getUserInfo(
+    @User() user: JwtPayloadDto,
+  ): Promise<ResponseDto<JwtPayloadDto>> {
     console.log(user);
     console.log('user getUserInfo');
-    return user;
+    return ResponseDto.OK_DATA('유저 정보', user);
   }
 }

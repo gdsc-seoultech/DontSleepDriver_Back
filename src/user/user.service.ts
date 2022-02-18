@@ -11,7 +11,7 @@ export class UserService {
     private redisCacheService: RedisCacheService,
   ) {}
 
-  async signUp(data: CreateUserRequest) {
+  async signUp(data: CreateUserRequest): Promise<void> {
     //이메일 인증 회원인지 확인
     const { email, password } = data;
     const checkedEmail = await this.redisCacheService.getCache(email);
@@ -28,10 +28,9 @@ export class UserService {
       });
       const cachedEmail = await this.redisCacheService.getCache(email);
       if (cachedEmail) await this.redisCacheService.delCache(email);
-      return '회원가입 성공';
     } catch (err) {
       console.log(err);
-      return new HttpException('database Error', 500);
+      throw new HttpException('database Error', 500);
     }
   }
 }

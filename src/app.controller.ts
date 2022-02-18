@@ -1,3 +1,4 @@
+import { ResponseDto } from './common/dto/response.dto';
 import { Controller, Get } from '@nestjs/common';
 
 @Controller()
@@ -6,6 +7,6 @@ export class AppController {
 
   @Get()
   async test() {
-    return 'hello Test';
+    return ResponseDto.OK_DATA('성공', { test: '1234' });
   }
 }

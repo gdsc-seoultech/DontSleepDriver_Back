@@ -35,8 +35,9 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   ) {
     const status = HttpStatus.BAD_REQUEST;
     response.status(status).send({
+      success: false,
       statusCode: status,
-      message: this.cleanUpException(exception),
+      error: this.cleanUpException(exception),
     });
   }
 
@@ -50,8 +51,9 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   ) {
     const status = HttpStatus.CONFLICT;
     response.status(status).send({
+      success: false,
       statusCode: status,
-      message: this.cleanUpException(exception),
+      error: this.cleanUpException(exception),
     });
   }
 
@@ -66,8 +68,9 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   ) {
     const status = HttpStatus.NOT_FOUND;
     response.status(status).json({
+      success: false,
       statusCode: status,
-      message: this.cleanUpException(exception),
+      error: this.cleanUpException(exception),
     });
   }
 

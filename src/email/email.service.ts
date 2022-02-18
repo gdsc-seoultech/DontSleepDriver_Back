@@ -32,7 +32,7 @@ export class EmailService {
     });
   }
 
-  async sendJoinEmail(email: string) {
+  async sendJoinEmail(email: string): Promise<string> {
     const existedEmail = await this.userRepository.findByUnique({ email });
     if (existedEmail) throw new HttpException('exist Email', 409);
 
@@ -48,22 +48,21 @@ export class EmailService {
 
     //캐시가 이미 있는지 확인.
     const existedCache = await this.redisCacheService.getCache(email);
-    if (existedCache === 'checked') return '이미 인증된 회원입니다.';
+    if (existedCache === 'checked') return 'already Auth Email';
     try {
       await this.transporter.sendMail(mailOption);
       await this.redisCacheService.setCache(email, signUpToken, { ttl: 180 });
-      return '이메일 전송 성공';
+      return 'success';
     } catch (err) {
       console.error(err);
       throw new HttpException('send Email Failed', 500);
     }
   }
 
-  async checkTokenByEmail(email: string, token: string) {
+  async checkTokenByEmail(email: string, token: string): Promise<void> {
     const existedToken = await this.redisCacheService.getCache(email);
     if (existedToken === token) {
       await this.redisCacheService.setCache(email, 'checked', { ttl: 600 });
-      return '인증 성공';
     } else {
       throw new HttpException('check failed', 401);
     }

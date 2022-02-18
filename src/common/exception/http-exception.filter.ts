@@ -4,14 +4,13 @@ import {
   ExceptionFilter,
   HttpException,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
     const error = exception.getResponse() as
       | string
@@ -19,16 +18,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     if (typeof error === 'string' || 'object') {
       response.status(status).send({
         success: false,
-        timestamp: new Date().toISOString(),
         statusCode: status,
-        path: request.url,
-        error,
+        error: typeof error === 'string' ? error : error.message,
       });
     } else {
       response.status(error.statusCode).send({
         success: false,
-        timestamp: new Date().toISOString(),
-        ...error,
+        statusCode: error.statusCode,
+        error: error.message,
       });
     }
   }
