@@ -14,7 +14,9 @@ export class AuthService {
 
   async validateUser(data: LoginRequest) {
     const { email, password } = data;
-    const findUser = await this.userRepository.findByUnique({ email });
+    const findUser = await this.userRepository.findByUnique({
+      emailId: { email, provider: 'local' },
+    });
 
     if (findUser && (await bcrypt.compare(password, findUser.password))) {
       const { password, ...result } = findUser;
