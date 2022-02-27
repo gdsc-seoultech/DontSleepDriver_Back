@@ -1,3 +1,4 @@
+import { OauthKakaoGuard } from './guard/oauth-kakao.guard';
 import { LocalAuthGuard } from './guard/local.guard';
 import { JwtAuthGuard } from './guard/jwt.guard';
 import { AuthService } from './auth.service';
@@ -9,6 +10,8 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { UserRepository } from 'src/repositories/user.repository';
 import { LocalStrategy } from './strategy/local.strategy';
+import { KakaoStrategy } from './strategy/oauth-kakao.strategy';
+import { OauthService } from './oauth.service';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { LocalStrategy } from './strategy/local.strategy';
     UserRepository,
     LocalAuthGuard,
     LocalStrategy,
+    OauthKakaoGuard,
+    KakaoStrategy,
+    OauthService,
   ],
   controllers: [AuthController],
 })
