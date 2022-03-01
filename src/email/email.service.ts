@@ -33,7 +33,9 @@ export class EmailService {
   }
 
   async sendJoinEmail(email: string): Promise<string> {
-    const existedEmail = await this.userRepository.findByUnique({ email });
+    const existedEmail = await this.userRepository.findByUnique({
+      emailId: { email, provider: 'local' },
+    });
     if (existedEmail) throw new HttpException('exist Email', 409);
 
     const signUpToken = uuid.v1();
