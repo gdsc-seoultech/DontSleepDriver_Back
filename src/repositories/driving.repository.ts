@@ -7,25 +7,25 @@ export class DrivingRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(id: number, data: CreateDrvingRequest) {
-    const { gpslevel, gpsdata, startTime, endTime, avgsleeplevel } = data;
-    let gpsDataLat = gpsdata.map(({ lat }) => lat);
-    let gpsDataLng = gpsdata.map(({ lng }) => lng);
+    const { gpsLevel, gpsData, startTime, endTime, avgSleepLevel } = data;
+    const gpsDataLat = gpsData.map(({ lat }) => lat);
+    const gpsDataLng = gpsData.map(({ lng }) => lng);
 
     const createDriving = await this.prisma.driving.create({
       data: {
         startTime: startTime,
         endTime: endTime,
-        avgSleepLevel: avgsleeplevel,
+        avgSleepLevel,
         driverId: id,
       },
     });
 
-    for (let idx = 0; idx < gpsdata.length; idx++) {
+    for (let idx = 0; idx < gpsData.length; idx++) {
       let lat = gpsDataLat[idx];
       let lng = gpsDataLng[idx];
-      let level = gpslevel[idx];
+      let level = gpsLevel[idx];
 
-      const createGpsData = await this.prisma.gpsData.create({
+      await this.prisma.gpsData.create({
         data: {
           lat: lat,
           lng: lng,
@@ -33,8 +33,6 @@ export class DrivingRepository {
           drivingId: createDriving.id,
         },
       });
-
-      console.log(createGpsData);
     }
 
     return createDriving;
@@ -50,8 +48,6 @@ export class DrivingRepository {
       },
     });
 
-    console.log(countLow._count.id);
-
     return countLow._count.id;
   }
 
@@ -63,7 +59,6 @@ export class DrivingRepository {
         driverId: id,
       },
     });
-    console.log(getDriving);
 
     return getDriving;
   }

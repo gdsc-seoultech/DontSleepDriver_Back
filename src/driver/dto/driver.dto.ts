@@ -20,7 +20,7 @@ export class CreateDrvingRequest {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => gpsData)
-  gpsdata: gpsData[];
+  gpsData: gpsData[];
 
   @Type(() => Date)
   @IsDate()
@@ -32,8 +32,8 @@ export class CreateDrvingRequest {
 
   @IsArray()
   @IsInt({ each: true })
-  gpslevel: number;
+  gpsLevel: number;
 
   @IsNumber()
-  avgsleeplevel: number;
+  avgSleepLevel: number;
 }
