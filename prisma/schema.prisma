@@ -22,4 +22,33 @@ model User {
 
   @@unique([email, provider], name: "emailId")
   @@map("users")
+
+  drivers  Driving[]
+}
+
+model Driving {
+  id            Int       @id @default(autoincrement())
+  startTime     DateTime  @map("start_time")
+  endTime       DateTime  @map("end_time")
+  avgSleepLevel Float     @map("avg_sleep_level")
+
+  driver    User      @relation(fields: [driverId], references: [id])
+  driverId  Int       @map("driver_id")
+  @@map("drivings")
+
+  gpsDatas  GpsData[]
+
+}
+
+model GpsData {
+  id        Int       @id @default(autoincrement())
+
+  lat       Float
+  lng       Float
+  level     Int
+
+  drivingData   Driving     @relation(fields: [drivingId], references: [id])
+  drivingId     Int         @map("driving_id")
+  @@map("gps_datas")
+
 }

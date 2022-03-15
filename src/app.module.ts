@@ -11,6 +11,8 @@ import { UserModule } from './user/user.module';
 import jwtConfig from './config/jwt.config';
 import { AuthModule } from './auth/auth.module';
 
+import { DriverModule } from './driver/driver.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
     RedisCacheModule,
     UserModule,
     AuthModule,
+    DriverModule,
   ],
   controllers: [AppController],
 })
