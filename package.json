@@ -40,6 +40,7 @@
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
     "dotenv-cli": "^5.0.0",
+    "googleapis": "^96.0.0",
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
     "passport-custom": "^1.1.1",
