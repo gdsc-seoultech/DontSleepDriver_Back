@@ -21,9 +21,13 @@ export class DriverService {
     console.log(id);
 
     let checkDrivingData = await this.drivingRepository.checkDriving(id);
-    if (checkDrivingData == null) {
+    console.log('checkDriving');
+    console.log(checkDrivingData);
+
+    if (checkDrivingData == 0) {
       return checkDrivingData;
     }
+
     const pages = Math.ceil(checkDrivingData / 6);
     return pages;
   }
@@ -34,5 +38,28 @@ export class DriverService {
 
     const drivingList = await this.drivingRepository.getDriving(id, page);
     return drivingList;
+  }
+
+  async getGpsData(id: number) {
+    const drivingData = await this.drivingRepository.findById(id);
+    if (drivingData == null) {
+      throw new HttpException('잘못된 요청입니다.', 404);
+    }
+
+    console.log(drivingData);
+
+    let gpsData = [];
+    let gpsLevel = [];
+
+    drivingData.gpsDatas.map(({ lat, lng, level }) => {
+      gpsData.push({ lat: lat, lng: lng });
+      gpsLevel.push(level);
+    });
+
+    delete drivingData.gpsDatas;
+
+    console.log({ ...drivingData, gpsData, gpsLevel });
+
+    return { ...drivingData, gpsData, gpsLevel };
   }
 }

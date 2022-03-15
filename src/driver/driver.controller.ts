@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DriverService } from './driver.service';
 import { CreateDrvingRequest } from './dto/driver.dto';
 
@@ -34,12 +42,19 @@ export class DriverController {
 
   //페이지 로드
   @UseGuards(JwtAuthGuard)
-  @Get('/:page')
+  @Get('/list/:page')
   async getDrivingInfo(
     @User() user: JwtPayloadDto,
     @Param('page') page: number,
   ) {
     const data = await this.driverService.getDriving(user, page);
     return ResponseDto.OK_DATA('page 조회 성공', data);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:id')
+  async getGpsDataInfo(@Param('id', ParseIntPipe) id: number) {
+    const data = await this.driverService.getGpsData(id);
+    return ResponseDto.OK_DATA('driving 조회 성공', data);
   }
 }

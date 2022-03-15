@@ -20,18 +20,6 @@ export class DrivingRepository {
       },
     });
 
-    let getDrivingId = await this.prisma.driving.aggregate({
-      _count: {
-        id: true,
-      },
-      where: {
-        driverId: id,
-      },
-    });
-
-    const value = getDrivingId[Object.keys(getDrivingId)[0]];
-    const gps_data_id = value[Object.keys(value)[0]];
-
     for (let idx = 0; idx < gpsdata.length; idx++) {
       let lat = gpsDataLat[idx];
       let lng = gpsDataLng[idx];
@@ -42,7 +30,7 @@ export class DrivingRepository {
           lat: lat,
           lng: lng,
           level: level,
-          drivingId: gps_data_id,
+          drivingId: createDriving.id,
         },
       });
 
@@ -62,10 +50,9 @@ export class DrivingRepository {
       },
     });
 
-    const value = countLow[Object.keys(countLow)[0]];
-    const drivingLow = value[Object.keys(value)[0]];
+    console.log(countLow._count.id);
 
-    return drivingLow;
+    return countLow._count.id;
   }
 
   async getDriving(id: number, page: number) {
@@ -79,5 +66,15 @@ export class DrivingRepository {
     console.log(getDriving);
 
     return getDriving;
+  }
+
+  async findById(id: number) {
+    const data = await this.prisma.driving.findUnique({
+      where: { id },
+      include: {
+        gpsDatas: true,
+      },
+    });
+    return data;
   }
 }
