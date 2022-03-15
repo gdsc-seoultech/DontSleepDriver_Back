@@ -47,8 +47,8 @@ model GpsData {
   lng       Float
   level     Int
 
-  gpsData   Driving     @relation(fields: [gpsDataId], references: [id])
-  gpsDataId Int         @map("gps_data_id")
+  drivingData   Driving     @relation(fields: [drivingId], references: [id])
+  drivingId     Int         @map("driving_id")
   @@map("gps_datas")
 
 }

@@ -6,40 +6,40 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 import { UseGuards } from '@nestjs/common';
 import { ResponseDto } from 'src/common/dto/response.dto';
 
-import { JwtDriverLoadDto } from './dto/jwt-driver.dto';
+import { JwtPayloadDto } from 'src/auth/dto/jwt-payload.dto';
 import { User } from 'src/auth/auth.decorator';
 
-@Controller('/api')
+@Controller('/api/driver')
 export class DriverController {
   constructor(private driverService: DriverService) {}
 
+  //데이터 저장
   @UseGuards(JwtAuthGuard)
-  @Post('/driver/gpsData')
+  @Post('/gpsData')
   async createGpsData(
     @Body() gpsData: CreateDrvingRequest,
-    @User() user: JwtDriverLoadDto,
+    @User() user: JwtPayloadDto,
   ) {
-    let driverId = user.id;
-    const data = await this.driverService.createDriving(driverId, gpsData);
-    return ResponseDto.OK_DATA('DB 저장 성공', data);
+    const data = await this.driverService.createDriving(user, gpsData);
+    return ResponseDto.OK_DATA('driving, gpsData 저장 완료', data);
   }
 
+  //페이지 수 출력
   @UseGuards(JwtAuthGuard)
-  @Get('/driving/:page')
-  //이거 파라미터 받는방법 알려주면 올리기
+  @Get('/pages')
+  async getPageInfo(@User() user: JwtPayloadDto) {
+    const data = await this.driverService.checkDriving(user);
+    return ResponseDto.OK_DATA('pages 조회 성공', data);
+  }
+
+  //페이지 로드
+  @UseGuards(JwtAuthGuard)
+  @Get('/:page')
   async getDrivingInfo(
-    @User() user: JwtDriverLoadDto,
+    @User() user: JwtPayloadDto,
     @Param('page') page: number,
   ) {
-    let driverId = user.id;
-
-    if (page == 0) {
-      console.log(0);
-      const data = await this.driverService.checkDriving(driverId);
-      return ResponseDto.OK_DATA('DB 조회 성공', data);
-    }
-
-    const data = await this.driverService.getDriving(driverId, page);
-    return ResponseDto.OK_DATA('DB 조회 성공', data);
+    const data = await this.driverService.getDriving(user, page);
+    return ResponseDto.OK_DATA('page 조회 성공', data);
   }
 }

@@ -1,10 +1,9 @@
-import { Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDrvingRequest } from 'src/driver/dto/driver.dto';
 
 @Injectable()
-export class GpsRepository {
+export class DrivingRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(id: number, data: CreateDrvingRequest) {
@@ -30,7 +29,7 @@ export class GpsRepository {
       },
     });
 
-    var value = getDrivingId[Object.keys(getDrivingId)[0]];
+    const value = getDrivingId[Object.keys(getDrivingId)[0]];
     const gps_data_id = value[Object.keys(value)[0]];
 
     for (let idx = 0; idx < gpsdata.length; idx++) {
@@ -43,7 +42,7 @@ export class GpsRepository {
           lat: lat,
           lng: lng,
           level: level,
-          gpsDataId: gps_data_id,
+          drivingId: gps_data_id,
         },
       });
 
@@ -53,10 +52,7 @@ export class GpsRepository {
     return createDriving;
   }
 
-  async checkData(id: number) {
-    // const countLow = await this.prisma
-    //   .$queryRaw`SELECT COUNT(*) FROM drivings WHERE driver_id = ${id} `;
-
+  async checkDriving(id: number) {
     const countLow = await await this.prisma.driving.aggregate({
       _count: {
         id: true,
@@ -66,8 +62,8 @@ export class GpsRepository {
       },
     });
 
-    var value = countLow[Object.keys(countLow)[0]];
-    var drivingLow = value[Object.keys(value)[0]];
+    const value = countLow[Object.keys(countLow)[0]];
+    const drivingLow = value[Object.keys(value)[0]];
 
     return drivingLow;
   }
@@ -76,6 +72,9 @@ export class GpsRepository {
     const getDriving = await this.prisma.driving.findMany({
       skip: (page - 1) * 6,
       take: 6,
+      where: {
+        driverId: id,
+      },
     });
     console.log(getDriving);
 
