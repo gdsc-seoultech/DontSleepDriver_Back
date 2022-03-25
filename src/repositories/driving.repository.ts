@@ -35,8 +35,6 @@ export class DrivingRepository {
           drivingId: createDriving.id,
         },
       });
-
-      console.log(createGpsData);
     }
 
     return createDriving;
@@ -52,8 +50,6 @@ export class DrivingRepository {
       },
     });
 
-    console.log(countLow._count.id);
-
     return countLow._count.id;
   }
 
@@ -65,7 +61,6 @@ export class DrivingRepository {
         driverId: id,
       },
     });
-    console.log(getDriving);
 
     return getDriving;
   }
