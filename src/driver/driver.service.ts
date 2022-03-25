@@ -58,8 +58,6 @@ export class DriverService {
 
     delete drivingData.gpsDatas;
 
-    console.log({ ...drivingData, gpsData, gpsLevel });
-
     return { ...drivingData, gpsData, gpsLevel };
   }
 }
