@@ -31,6 +31,7 @@ model Driving {
   startTime     DateTime  @map("start_time")
   endTime       DateTime  @map("end_time")
   avgSleepLevel Float     @map("avg_sleep_level")
+  totalTime     Int    @map("total_time")
 
   driver    User      @relation(fields: [driverId], references: [id])
   driverId  Int       @map("driver_id")

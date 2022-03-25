@@ -36,4 +36,7 @@ export class CreateDrvingRequest {
 
   @IsNumber()
   avgSleepLevel: number;
+
+  @IsNumber()
+  totalTime: number;
 }
