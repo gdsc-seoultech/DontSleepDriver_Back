@@ -4,6 +4,7 @@ import {
   IsArray,
   ValidateNested,
   IsNumber,
+  IsString,
 } from 'class-validator';
 
 import { Type } from 'class-transformer';
@@ -22,13 +23,11 @@ export class CreateDrvingRequest {
   @Type(() => gpsData)
   gpsData: gpsData[];
 
-  @Type(() => Date)
-  @IsDate()
-  startTime: Date;
+  @IsString()
+  startTime: string;
 
-  @Type(() => Date)
-  @IsDate()
-  endTime: Date;
+  @IsString()
+  endTime: string;
 
   @IsArray()
   @IsInt({ each: true })

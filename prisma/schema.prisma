@@ -28,8 +28,8 @@ model User {
 
 model Driving {
   id            Int       @id @default(autoincrement())
-  startTime     DateTime  @map("start_time")
-  endTime       DateTime  @map("end_time")
+  startTime     String  @map("start_time")
+  endTime       String  @map("end_time")
   avgSleepLevel Float     @map("avg_sleep_level")
   totalTime     Int    @map("total_time")
 
