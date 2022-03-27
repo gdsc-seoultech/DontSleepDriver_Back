@@ -60,6 +60,9 @@ export class DrivingRepository {
       where: {
         driverId: id,
       },
+      orderBy: {
+        id: 'desc',
+      },
     });
 
     return getDriving;
