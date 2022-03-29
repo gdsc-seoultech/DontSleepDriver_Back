@@ -1,73 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Don't Sleep Driver
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### What is Don't Sleep Driver?
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Every year, drowsy driving causes numerous traffic accidents and many people are injured or killed. In Korea, 70% of deaths in highway traffic accidents are due to drowsiness or neglect.
 
-## Description
+The death rate from drowsy driving is much higher than drunk driving, but awareness of the risks is very low. Drivers who drive alone for long periods of time are vulnerable to drowsy driving.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+So, to solve this problem, we created an app to prevent drowsy driving called Dont Sleep Driver.
 
-## Installation
+## Feature
 
-```bash
-$ npm install
-```
+Users can sign in with their email and password and can easily sign up and sign in with OAuth2.0 technology.    
 
-## Running the app
+When the user starts driving and presses the start button of the app, it recognizes faces through the camera and determines whether or not they are asleep.
 
-```bash
-# development
-$ npm run start
+If the user is drowsy while driving, a warning alarm will sound, as well as an alarm for stretching and ventilation every 30 minutes and 2 hours.
 
-# watch mode
-$ npm run start:dev
+You can end driving and inquire about your driving record, gps information and sleep level in the record tab.
 
-# production mode
-$ npm run start:prod
-```
+## Demo Video  
 
-## Test
+[![DontSleepDriver](https://user-images.githubusercontent.com/28949213/160598053-71f9ecef-3304-46b9-bb6c-170dade75c15.png)](https://youtu.be/OeRTsWqkZ1Y)
 
-```bash
-# unit tests
-$ npm run test
+## Repositories
+- [Android](https://github.com/gdsc-seoultech/DontSleepDriver_Android)
+- [ML](https://github.com/gdsc-seoultech/DontSleepDriver_ML)
+- [BackEnd](https://github.com/gdsc-seoultech/DontSleepDriver_Back)
 
-# e2e tests
-$ npm run test:e2e
+## 👨‍👩‍👧‍👦 Team Member
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+<table algin="center">
+   <tr>
+      <td colspan="2" align="center"><strong>Back-End</strong></td>
+      <td colspan="1" align="center"><strong>Android</strong></td>
+      <td colspan="1" align="center"><strong>ML</strong></td>
+   </tr>
+  <tr>
+     <td align="center">
+        <a href="https://github.com/InHyeok-J"><img src="https://avatars.githubusercontent.com/u/28949213?v=4" width="150px" alt="조인혁"/><br /><sub><b>조인혁</b></sub></a>
+     </td>
+    <td align="center">
+    <a href="https://github.com/ehrwk"><img src="https://avatars.githubusercontent.com/u/81352045?v=4" width="150px;" alt="윤희서"/><br /><sub><b>윤희서</b></sub></a><br />
+    </td>
+     <td align="center">
+        <a href="https://github.com/comye1"><img src="https://avatars.githubusercontent.com/u/50735594?v=4" width="150px" alt="김예원"/><br /><sub><b>김예원</b></sub></a>
+     </td>
+     <td align="center">
+        <a href="https://github.com/keonju2"><img src="https://avatars.githubusercontent.com/u/54880474?v=4" width="150px" alt="나건주"/><br /><sub><b>나건주</b></sub></a>
+  <tr>
+</table> 
